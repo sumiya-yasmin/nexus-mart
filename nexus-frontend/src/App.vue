@@ -1,7 +1,9 @@
-<script setup></script>
+<script setup>
+import Navbar from "./components/Navbar.vue";
+</script>
 
 <template>
-  <h2 class="text-3xl">Nexus Mart</h2>
+  <Navbar />
 </template>
 
 <style scoped></style>
