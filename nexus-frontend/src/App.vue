@@ -1,7 +1,7 @@
 <script setup></script>
 
 <template>
-  <h1>Nexus Mart</h1>
+  <h2 class="text-3xl">Nexus Mart</h2>
 </template>
 
 <style scoped></style>
