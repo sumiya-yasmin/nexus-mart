@@ -31,7 +31,8 @@ const cartCount = ref(0);
       >
         <span class="text-xl">🛒</span>
         <span
-          class="absolute right-0 top-0 text-[10px] {{cartCount===0? 'bg-blue-100':'bg-red-500'}} px-1.5 font-bold rounded-full ring-2 ring-white"
+          class="absolute right-0 top-0 text-[10px] px-1.5 font-bold rounded-full ring-2 ring-white"
+          :class="cartCount===0? 'bg-blue-100':'bg-red-500'"
           >{{cartCount}}</span
         >
       </button>
