@@ -1,4 +1,8 @@
-<script setup></script>
+<script setup>
+import { ref } from 'vue';
+const searchInput = ref('');
+const cartCount = ref(0);
+</script>
 <template>
   <div
     class="flex justify-between items-center py-4 px-16 bg-white shadow-sm sticky top-0 z-50"
@@ -14,6 +18,7 @@
           🔍
         </span>
         <input
+         v-model="searchInput"
           class="border bg-gray-100 border-gray-200 w-full py-3 pl-10 pr-3 leading-5 rounded-md focus:outline-none focus:bg-white focus:ring-2"
           placeholder="Search your Gadgets...."
         />
@@ -26,8 +31,8 @@
       >
         <span class="text-xl">🛒</span>
         <span
-          class="absolute right-0 top-0 text-[10px] bg-red-500 px-1.5 font-bold rounded-full ring-2 ring-white"
-          >1</span
+          class="absolute right-0 top-0 text-[10px] {{cartCount===0? 'bg-blue-100':'bg-red-500'}} px-1.5 font-bold rounded-full ring-2 ring-white"
+          >{{cartCount}}</span
         >
       </button>
       <button
