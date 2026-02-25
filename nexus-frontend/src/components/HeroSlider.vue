@@ -16,9 +16,9 @@ const prevSlide = () => {
   <div class="relative w-full max-w-4xl mx-auto overflow-hidden group">
     <button
       @click="prevSlide"
-      class="absolute left-4 z-10 top-1/2 -translate-y-1/2 bg-white/50 p-2 rounded-full hover:bg-white transition"
+      class="absolute text-xl left-4 z-10 top-1/2 -translate-y-1/2 bg-white/50 p-2 rounded-full hover:bg-white transition"
     >
-      ⬅️
+      <
     </button>
     <div
       class="flex transition-transform duration-700 ease-in-out"
@@ -33,12 +33,17 @@ const prevSlide = () => {
     </div>
     <button
       @click="nextSlide"
-      class="absolute right-4 top-1/2 -translate-y-1/2 bg-white/50 p-2 z-10 rounded-full hover:bg-white transition"
+      class="absolute text-xl right-4 top-1/2 -translate-y-1/2 bg-white/50 p-2 z-10 rounded-full hover:bg-white transition"
     >
-      ➡️
+      >
     </button>
     <div class="absolute bottom-4 z-10 left-1/2 -translate-x-1/2 flex space-x-2">
- abcdrft
+       <div v-for="_slide,index in slides" :key="index"
+       class="w-2 h-2 rounded-full "
+       :class="currentIndex==index?'bg-blue-400':'bg-white'"
+       @click="currentIndex=index"
+       >       
+       </div>
  
     </div>
   </div>

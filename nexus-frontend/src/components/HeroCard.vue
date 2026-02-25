@@ -8,7 +8,7 @@ defineProps({
 </script>
 <template>
   <div
-    class="h-[400px] flex p-2 justify-between items-center shadow-lg overflow-hidden text-white px-4"
+    class="h-100 flex p-2 justify-between items-center shadow-lg overflow-hidden text-white px-4"
     :class="slide.theme"
   >
     <div class="w-1/2 p-10 flex flex-col items-start space-y-4">
