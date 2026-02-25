@@ -8,7 +8,7 @@ defineProps({
 </script>
 <template>
   <div
-    class="max-w-4xl h-[400px] flex m-4 justify-between items-center shadow-lg overflow-hidden text-white px-4"
+    class="h-[400px] flex p-2 justify-between items-center shadow-lg overflow-hidden text-white px-4"
     :class="slide.theme"
   >
     <div class="w-1/2 p-10 flex flex-col items-start space-y-4">
@@ -33,7 +33,7 @@ defineProps({
     <img
       :src="slide.image"
       :alt="slide.title"
-      class="w-1/2 relative h-auto object-cover rounded-md"
+      class="w-1/2 relative h-full object-cover rounded-2xl shadow-2xl"
     />
   </div>
 </template>
