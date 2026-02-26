@@ -1,7 +1,7 @@
 <script setup>
-import { categoriesList } from "@/data/categories";
-import { ref } from "vue";
-const categories = ref(categoriesList);
+import { useCategories } from "@/composable/useCategories";
+import { onMounted, ref } from "vue";
+const { categories, loading, error, loadCategories } = useCategories();
 const scrollContainer = ref(null);
 const scrollLeft = () =>{
   if(scrollContainer.value){
@@ -13,6 +13,9 @@ if(scrollContainer.value){
     scrollContainer.value.scrollBy({left: 300, behavior: "smooth"})
   }
 }
+onMounted(() => {
+  loadCategories();
+})
 </script>
 <template>
   <div
