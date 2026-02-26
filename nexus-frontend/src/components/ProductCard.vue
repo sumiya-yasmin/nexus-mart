@@ -5,6 +5,7 @@ const props = defineProps({
     required: true,
   },
 });
+props.product.oldPrice= props.product.old_price;
 const discount = props.product.oldPrice
   ? Math.round(
       ((props.product.oldPrice - props.product.price) /
