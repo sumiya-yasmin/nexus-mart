@@ -13,7 +13,7 @@ class ProductSeeder extends Seeder
     public function run(): void
     {
         $products = [
-            // CATEGORY: Gaming Mouse (ID: 1)
+            // Gaming Mice
             [
                 'category_id' => 1,
                 'name' => 'Logitech G Pro X Superlight',
@@ -23,7 +23,7 @@ class ProductSeeder extends Seeder
                 'old_price' => 15500,
                 'is_flash_sale' => true,
                 'rating' => 4.9,
-                'image' => 'mouse-gpro.jpg'
+                'image' => 'https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?q=80&w=600&auto=format&fit=crop'
             ],
             [
                 'category_id' => 1,
@@ -34,21 +34,20 @@ class ProductSeeder extends Seeder
                 'old_price' => null,
                 'is_flash_sale' => false,
                 'rating' => 4.8,
-                'image' => 'mouse-razer.jpg'
+                'image' => 'https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?q=80&w=600&auto=format&fit=crop'
             ],
             [
                 'category_id' => 1,
                 'name' => 'SteelSeries Rival 3',
                 'slug' => 'steelseries-rival-3',
-                'description' => 'Budget-friendly performance wired mouse.',
+                'description' => 'Precision tracking for competitive play.',
                 'price' => 3500,
-                'old_price' => 4200,
+                'old_price' => 4500,
                 'is_flash_sale' => false,
                 'rating' => 4.5,
-                'image' => 'mouse-ss.jpg'
+                'image' => 'https://images.unsplash.com/photo-1613141411244-0e4ac259d217?q=80&w=600&auto=format&fit=crop'
             ],
-
-            // CATEGORY: Keyboards (ID: 2)
+            // Keyboards
             [
                 'category_id' => 2,
                 'name' => 'Keychron K2 V2',
@@ -58,32 +57,31 @@ class ProductSeeder extends Seeder
                 'old_price' => 9500,
                 'is_flash_sale' => true,
                 'rating' => 4.7,
-                'image' => 'kb-k2.jpg'
+                'image' => 'https://images.unsplash.com/photo-1511467687858-23d96c32e4ae?q=80&w=600&auto=format&fit=crop'
+            ],
+            [
+                'category_id' => 2,
+                'name' => 'Custom Mechanical Keyboard',
+                'slug' => 'custom-kb-rgb',
+                'description' => 'Hot-swappable switches with RGB lighting.',
+                'price' => 12500,
+                'old_price' => 15000,
+                'is_flash_sale' => false,
+                'rating' => 4.9,
+                'image' => 'https://images.unsplash.com/photo-1595225476474-87563907a212?q=80&w=600&auto=format&fit=crop'
             ],
             [
                 'category_id' => 2,
                 'name' => 'Ducky One 3 Mini',
-                'slug' => 'ducky-one-3-mini',
-                'description' => '60% Hot-swappable Daybreak edition.',
-                'price' => 11500,
+                'slug' => 'ducky-one-3',
+                'description' => '60% form factor for maximum desk space.',
+                'price' => 10500,
                 'old_price' => null,
                 'is_flash_sale' => false,
-                'rating' => 4.9,
-                'image' => 'kb-ducky.jpg'
+                'rating' => 4.8,
+                'image' => 'https://images.unsplash.com/photo-1613141411244-0e4ac259d217?q=80&w=600&auto=format&fit=crop'
             ],
-            [
-                'category_id' => 2,
-                'name' => 'Corsair K70 RGB TKL',
-                'slug' => 'corsair-k70-tkl',
-                'description' => 'Champion Series with 8000Hz polling rate.',
-                'price' => 15000,
-                'old_price' => 17000,
-                'is_flash_sale' => false,
-                'rating' => 4.6,
-                'image' => 'kb-corsair.jpg'
-            ],
-
-            // CATEGORY: Audio (ID: 3)
+            // Audio
             [
                 'category_id' => 3,
                 'name' => 'HyperX Cloud II Wireless',
@@ -93,21 +91,20 @@ class ProductSeeder extends Seeder
                 'old_price' => 14000,
                 'is_flash_sale' => true,
                 'rating' => 4.8,
-                'image' => 'audio-hyperx.jpg'
+                'image' => 'https://images.unsplash.com/photo-1583394838336-acd977730f90?q=80&w=500&auto=format&fit=crop'
             ],
             [
                 'category_id' => 3,
-                'name' => 'SteelSeries Arctis Nova 7',
-                'slug' => 'arctis-nova-7',
-                'description' => 'Simultaneous Wireless (2.4GHz & Bluetooth).',
-                'price' => 18500,
-                'old_price' => null,
+                'name' => 'Sony WH-1000XM5',
+                'slug' => 'sony-xm5',
+                'description' => 'Industry-leading noise cancellation.',
+                'price' => 35000,
+                'old_price' => 38000,
                 'is_flash_sale' => false,
-                'rating' => 4.7,
-                'image' => 'audio-ss.jpg'
+                'rating' => 5.0,
+                'image' => 'https://images.unsplash.com/photo-1644931235632-d30235650e92?q=80&w=600&auto=format&fit=crop'
             ],
-
-            // CATEGORY: Monitors (ID: 4)
+            // Monitors
             [
                 'category_id' => 4,
                 'name' => 'ASUS ROG Swift 27"',
@@ -117,19 +114,19 @@ class ProductSeeder extends Seeder
                 'old_price' => 72000,
                 'is_flash_sale' => false,
                 'rating' => 4.9,
-                'image' => 'mon-asus.jpg'
+                'image' => 'https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?q=80&w=600&auto=format&fit=crop'
             ],
             [
                 'category_id' => 4,
-                'name' => 'LG UltraGear 24"',
-                'slug' => 'lg-ultragear-24',
-                'description' => '1080p 144Hz 1ms response time.',
-                'price' => 22000,
-                'old_price' => 25000,
-                'is_flash_sale' => true,
-                'rating' => 4.5,
-                'image' => 'mon-lg.jpg'
-            ],
+                'name' => 'Dell UltraSharp 32"',
+                'slug' => 'dell-u32',
+                'description' => '4K USB-C Hub Monitor for creators.',
+                'price' => 85000,
+                'old_price' => 90000,
+                'is_flash_sale' => false,
+                'rating' => 4.8,
+                'image' => 'https://images.unsplash.com/photo-1547119957-637f8679db1e?q=80&w=600&auto=format&fit=crop'
+            ]
         ];
         foreach ($products as $prod) {
             \App\Models\Product::create($prod);
