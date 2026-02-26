@@ -6,7 +6,7 @@ const products = ref(productList);
 </script>
 <template>
     <div class="max-w-7xl mx-auto px-4 pb-12 mt-12">
-<h2 class="text-2xl font-bold mb-10 text-center">Featured Products</h2>    
+<h2 class="text-xl font-bold mb-10 text-center">Featured Products</h2>    
 <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         <ProductCard 
             v-for="product in products" 

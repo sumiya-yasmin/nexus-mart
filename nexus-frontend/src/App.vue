@@ -3,15 +3,16 @@ import CategoryRow from "./components/CategoryRow.vue";
 import FeaturedProducts from "./components/FeaturedProducts.vue";
 import HeroSlider from "./components/HeroSlider.vue";
 import Navbar from "./components/Navbar.vue";
+import MainLayout from "./Layouts/MainLayout.vue";
 </script>
 
 <template>
-  <div class="min-h-screen bg-slate-50">
-  <Navbar />
+  <MainLayout> 
+
   <HeroSlider />
   <CategoryRow />
   <FeaturedProducts />
-  </div>
+  </MainLayout>
 </template>
 
 <style scoped></style>
