@@ -26,10 +26,10 @@ if(scrollContainer.value){
     >
       <
     </button>
-    <div class=" max-w-6xl flex flex-nowrap gap-8 mx-auto overflow-x-auto scroll-smooth [&::-webkit-scrollbar]:hidden" ref="scrollContainer">
+    <div class=" max-w-6xl flex flex-nowrap gap-8 mx-auto overflow-x-auto scroll-smooth [&::-webkit-scrollbar]:hidden py-4" ref="scrollContainer">
     <div
       v-for="category in categories"
-      class="flex flex-col w-40 shrink-0 items-center justify-center p-6 bg-gray-50 rounded-2xl hover:bg-white hover:shadow-xl transition-all duration-300 cursor-pointer group"
+      class="flex flex-col bg-white w-40 shrink-0 items-center justify-center p-6 bg-gray-50 rounded-2xl hover:bg-white hover:shadow-xl transition-all duration-300 cursor-pointer group"
     >
       <h2 class="font-black">{{ category.name }}</h2>
       <div
