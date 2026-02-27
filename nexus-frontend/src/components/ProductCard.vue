@@ -15,6 +15,7 @@ const discount = props.product.oldPrice
   : 0;
 </script>
 <template>
+  <router-link :to="`/product/${product.slug}`" class="group">
   <div
     class="bg-white flex flex-col h-full border border-slate-100 rounded-2xl overflow-hidden hover:shadow-xl transition-shadow"
   >
@@ -62,4 +63,5 @@ const discount = props.product.oldPrice
         </button>
     </div>
   </div>
+  </router-link>
 </template>
