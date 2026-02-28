@@ -1,15 +1,18 @@
 <script setup>
+import { useCartStore } from '@/store/cart';
 import { ref } from 'vue';
 const searchInput = ref('');
-const cartCount = ref(0);
+const cartStore = useCartStore();
 </script>
 <template>
   <div
     class="flex justify-between items-center py-4 px-16 bg-white shadow-sm sticky top-0 z-50"
   >
+  <router-link to="/">
     <div class="text-2xl font-black text-blue-600 tracking-tighter">
       NEXUS<span class="text-gray-900">MART</span>
     </div>
+    </router-link>
     <div class="hidden md:block flex-1 max-w-md">
       <div class="relative">
         <span
@@ -32,8 +35,8 @@ const cartCount = ref(0);
         <span class="text-lg">🛒</span>
         <span
           class="absolute right-0 top-0 text-[10px] px-1.5 font-bold rounded-full ring-2 ring-white"
-          :class="cartCount===0? 'bg-blue-100':'bg-red-500'"
-          >{{cartCount}}</span
+          :class="cartStore.totalItems===0? 'bg-blue-100':'bg-red-500 text-white'"
+          >{{cartStore.totalItems}}</span
         >
       </button>
       <button
