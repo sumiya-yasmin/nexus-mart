@@ -6,6 +6,7 @@ const { products, loading, error, loadProducts } = useProducts();
 onMounted(() => {
   loadProducts();
 });
+
 </script>
 <template>
   <div class="max-w-7xl mx-auto px-4 pb-12 mt-12">

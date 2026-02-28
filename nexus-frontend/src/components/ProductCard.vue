@@ -1,4 +1,6 @@
 <script setup>
+import { useCartActions } from '@/composable/useCartActions';
+
 const props = defineProps({
   product: {
     type: Object,
@@ -13,6 +15,7 @@ const discount = props.product.oldPrice
         100,
     )
   : 0;
+const { addToCartWithNotify } = useCartActions();
 </script>
 <template>
   <router-link :to="`/product/${product.slug}`" class="group">
@@ -58,7 +61,9 @@ const discount = props.product.oldPrice
           >{{ product.oldPrice.toLocaleString() }}৳</span
         >
       </div>
-     <button class="w-full mt-3 py-2 bg-slate-900 text-white text-xs font-bold rounded-lg hover:bg-slate-600 transition">
+     <button 
+     @click.prevent="addToCartWithNotify(product,1)"
+     class="w-full z-50 mt-3 py-2 bg-slate-900 text-white text-xs font-bold rounded-lg hover:bg-slate-600 transition">
             Add to Cart
         </button>
     </div>
