@@ -1,5 +1,6 @@
 <script setup>
 import { useCategories } from "@/composable/useCategories";
+import { useProductStore } from "@/store/product";
 import { onMounted, ref } from "vue";
 const { categories, loading, error, loadCategories } = useCategories();
 const scrollContainer = ref(null);
@@ -16,9 +17,13 @@ if(scrollContainer.value){
 onMounted(() => {
   loadCategories();
 })
+const productStore = useProductStore();
 const emit = defineEmits(['category-filter']);
 const selectCategory = (slug) => {
   emit('category-filter', slug);
+  if (slug === '') {
+    productStore.searchQuery = '';
+  }
 };
 const props = defineProps(['activeFilter']);
 </script>
@@ -35,6 +40,15 @@ const props = defineProps(['activeFilter']);
       <
     </button>
     <div class=" max-w-6xl flex flex-nowrap gap-8 mx-auto overflow-x-auto scroll-smooth [&::-webkit-scrollbar]:hidden py-4" ref="scrollContainer">
+      <div 
+    @click="selectCategory('')" 
+    class="flex flex-col bg-white w-40 shrink-0 items-center justify-center p-6 rounded-2xl cursor-pointer transition-all border-2"
+    :class="!activeFilter ? 'border-blue-500 bg-blue-50' : 'border-transparent bg-gray-50'"
+  >
+      <h2 class="font-black ">All Products</h2>
+    <div class="w-20 h-20 mb-4 rounded-full flex items-center justify-center bg-white shadow-sm">
+       <span class="text-2xl">🌍</span> </div>
+  </div>
     <div
       v-for="category in categories"
       class="flex flex-col bg-white w-40 shrink-0 items-center justify-center p-6 bg-gray-50 rounded-2xl hover:bg-white hover:shadow-xl transition-all duration-300 cursor-pointer group"
