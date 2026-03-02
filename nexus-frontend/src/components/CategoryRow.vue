@@ -16,6 +16,11 @@ if(scrollContainer.value){
 onMounted(() => {
   loadCategories();
 })
+const emit = defineEmits(['category-filter']);
+const selectCategory = (slug) => {
+  emit('category-filter', slug);
+};
+const props = defineProps(['activeFilter']);
 </script>
 <template>
   <div
@@ -33,6 +38,9 @@ onMounted(() => {
     <div
       v-for="category in categories"
       class="flex flex-col bg-white w-40 shrink-0 items-center justify-center p-6 bg-gray-50 rounded-2xl hover:bg-white hover:shadow-xl transition-all duration-300 cursor-pointer group"
+              @click="selectCategory(category.slug)"
+              :class="{ 'ring-2 ring-blue-500 shadow-lg': activeFilter === category.slug }"
+
     >
       <h2 class="font-black">{{ category.name }}</h2>
       <div
