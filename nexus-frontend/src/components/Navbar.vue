@@ -1,7 +1,7 @@
 <script setup>
 import { useCartStore } from "@/store/cart";
-import { ref } from "vue";
-const searchInput = ref("");
+import { useProductStore } from "@/store/product";
+const productStore = useProductStore();
 const cartStore = useCartStore();
 </script>
 <template>
@@ -21,10 +21,17 @@ const cartStore = useCartStore();
           🔍
         </span>
         <input
-          v-model="searchInput"
+          v-model="productStore.searchQuery"
           class="border bg-gray-100 border-gray-200 w-full py-2 pl-10 pr-3 leading-5 rounded-md focus:outline-none focus:bg-white focus:ring-2"
           placeholder="Search your Gadgets...."
         />
+        <button 
+    v-if="productStore.searchQuery"
+    @click="productStore.searchQuery = ''"
+    class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600"
+  >
+    ✕
+  </button>
       </div>
     </div>
     <div class="flex justify-between items-center gap-6">
