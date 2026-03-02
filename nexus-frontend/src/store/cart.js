@@ -9,8 +9,13 @@ export const useCartStore = defineStore('cart', () => {
     const totalItems = computed(() => {
         return items.value.reduce((total, item) => total + item.quantity, 0);
     });
+    
     const cartTotalPrice = computed(() => {
         return items.value.reduce((total, item) => total + (item.quantity * item.price),0);
+    })
+
+    const cartTotalDiscountedPrice = computed(() => {
+        return items.value.reduce((total, item) => total + (item.quantity * (item.oldPrice-item.price)), 0);
     })
 
     //actions
@@ -29,5 +34,5 @@ export const useCartStore = defineStore('cart', () => {
         localStorage.setItem('nexus-cart', JSON.stringify(newVal));
     }, { deep: true });
 
-    return { items, totalItems, cartTotalPrice, addToCart, removeFromCart };
+    return { items, totalItems, cartTotalPrice, cartTotalDiscountedPrice , addToCart, removeFromCart };
 })

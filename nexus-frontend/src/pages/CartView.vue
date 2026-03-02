@@ -95,13 +95,19 @@ const decrement = (product) => {
     </div>
     <div
       v-if="cartStore.items.length > 0"
-      class="mt-8 p-6 bg-slate-50 flex flex-col border-t border-gray-300 justify-between items-center"
+      class="mt-8 py-6 px-6 bg-slate-50 flex border-t border-gray-300 justify-center items-center gap-20"
     >
+    <div class="flex flex-col">
       <span class="text-xl font-bold"
         >Total Items: {{ cartStore.totalItems }}</span
       >
-      <span class="text-2xl font-black text-blue-600"
-        >Grand Total: ৳ {{ cartStore.cartTotalPrice.toLocaleString() }}</span
+      
+      <span class="text-xl font-semibold text-blue-600"
+        >GrandTotal: ৳ {{ cartStore.cartTotalPrice.toLocaleString() }}</span
+      >
+      </div>
+      <span class="text-xl font-semibold bg-orange-100 text-orange-600 px-3 py-1 rounded-lg text-sm font-bold"
+        >Saved: ৳ {{ cartStore.cartTotalDiscountedPrice.toLocaleString() }}</span
       >
     </div>
   </div>
