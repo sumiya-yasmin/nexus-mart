@@ -52,11 +52,13 @@ const cartStore = useCartStore();
           >
         </button>
       </router-link>
+      <router-link to="/login">
       <button
         class="border rounded-md hover:bg-blue-600 hover:text-white py-2 px-4"
       >
         Login
       </button>
+      </router-link>
     </div>
   </div>
 </template>
