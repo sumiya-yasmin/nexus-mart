@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\ProductController;
 use Illuminate\Http\Request;
@@ -12,3 +13,7 @@ Route::get('/user', function (Request $request) {
 Route::get('/products', [ProductController::class, 'index']);
 Route::get('/product/{product:slug}', [ProductController::class, 'show']);
 Route::get('/categories', [CategoryController::class, 'index']);
+
+Route::post('/register', [AuthController::class, 'register']);
+Route::post('/login', [AuthController::class, 'login']);
+
