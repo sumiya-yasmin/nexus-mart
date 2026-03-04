@@ -12,46 +12,53 @@ class AuthController extends Controller
     public function register(Request $request)
     {
         $fields = $request->validate([
-            'name'=> 'required|string',
-            'email'=> 'required|unique:users,email',
-            'password'=> 'required|string|confirmed',
+            'name' => 'required|string',
+            'email' => 'required|unique:users,email',
+            'password' => 'required|string|confirmed',
         ]);
 
         $user = User::create([
-            'name'=> $fields['name'],
-            'email'=> $fields['email'],
-            'password'=> bcrypt($fields['password']),
-            'role'=> 'customer',
+            'name' => $fields['name'],
+            'email' => $fields['email'],
+            'password' => bcrypt($fields['password']),
+            'role' => 'customer',
         ]);
 
         $token = $user->createToken('myapptoken')->plainTextToken;
         return response([
-            'user'=> $user,
-            'Token'=> $token,
-        ],201);
-
+            'user' => $user,
+            'Token' => $token,
+        ], 201);
     }
 
     public function login(Request $request)
     {
         $fields = $request->validate([
-            'email'=> 'required',
-            'password'=> 'required',
+            'email' => 'required',
+            'password' => 'required',
         ]);
 
         $user = User::where([
-            'email'=> $fields['email'],        
+            'email' => $fields['email'],
         ])->first();
 
-        if(!$user || !Hash::check($fields['password'], $user->password)){
-                return response([
-                    'message'=> 'Invalid credentials',
-                ],401);
+        if (!$user || !Hash::check($fields['password'], $user->password)) {
+            return response([
+                'message' => 'Invalid credentials',
+            ], 401);
         }
         $token = $user->createToken('myapptoken')->plainTextToken;
         return response([
-            'user'=> $user,
-            'Token'=> $token,
-        ],201);
+            'user' => $user,
+            'token' => $token,
+        ], 201);
+    }
+
+    public function logout(Request $request)
+    {
+        $request->user()->currentAccessToken()->delete();
+        return response([
+            'message' => 'Logged out successfully'
+        ], 200);
     }
 }
