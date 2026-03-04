@@ -1,6 +1,7 @@
 import { defineStore } from "pinia";
 import { computed, ref } from "vue";
 import * as authApi from "@/api/authService";
+import { useRouter } from "vue-router";
 export const useAuthStore = defineStore("auth", () => {
   const user = ref(JSON.parse(localStorage.getItem("user")) || null);
   const token = ref(localStorage.getItem("token") || null);
@@ -25,7 +26,7 @@ export const useAuthStore = defineStore("auth", () => {
 
   const register = async (userData) => {
     try {
-        const response = await authApi.register(userData);
+      const response = await authApi.register(userData);
       user.value = response.data.user;
       token.value = response.data.token;
       localStorage.setItem("user", JSON.stringify(user.value));
@@ -34,7 +35,20 @@ export const useAuthStore = defineStore("auth", () => {
       throw error;
     }
   };
+
+  const logout = async () => {
+    try {
+      await authApi.logout();
+    } catch (error) {
+      console.error("Backend logout failed or token already expired", error);
+    } finally {
+      user.value = null;
+      token.value = null;
+      localStorage.removeItem('user');
+      localStorage.removeItem('token');
+    }
+  }
     return {
-        user, token, isLoggedIn, isAdmin, login,register
+        user, token, isLoggedIn, isAdmin, login,register, logout
     }
 });
