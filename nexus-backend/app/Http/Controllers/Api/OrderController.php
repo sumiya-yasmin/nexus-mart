@@ -20,7 +20,7 @@ class OrderController extends Controller
 
         return DB::transaction(function () use ($request) {
             $order = Order::create([
-                'user_id' => $request->user()->id(),
+                'user_id' => $request->user()->id,
                 'total_price' => $request->total_price,
                 'status' => 'pending',
                 'address' => $request->address,
