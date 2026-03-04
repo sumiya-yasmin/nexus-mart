@@ -1,5 +1,6 @@
 <script setup>
 import { useCartActions } from "@/composable/useCartActions";
+import { useOrder } from "@/composable/useOrder";
 import { useCartStore } from "@/store/cart";
 
 const cartStore = useCartStore();
@@ -19,6 +20,7 @@ const decrement = (product) => {
     product.quantity--;
   }
 };
+const { placeOrder } = useOrder();
 </script>
 
 <template>
@@ -105,10 +107,17 @@ const decrement = (product) => {
       <span class="text-xl font-semibold text-blue-600"
         >GrandTotal: ৳ {{ cartStore.cartTotalPrice.toLocaleString() }}</span
       >
-      </div>
-      <span class="text-xl font-semibold bg-orange-100 text-orange-600 px-3 py-1 rounded-lg text-sm font-bold"
+      <span class="text-xl font-semibold bg-orange-100 text-orange-600 p-1 rounded-lg text-xs font-bold mt-1 w-fit"
         >Saved: ৳ {{ cartStore.cartTotalDiscountedPrice.toLocaleString() }}</span
       >
+      <button class="px-6 py-2 font-semibold bg-blue-600 text-white rounded-lg hover:bg-blue-700 shadow-sm mt-6"
+      @click="placeOrder"
+      >
+      Checkout
+    </button>
+    </div>
+    
+      
     </div>
   </div>
 </template>
