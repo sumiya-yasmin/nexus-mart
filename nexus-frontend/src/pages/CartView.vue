@@ -2,6 +2,7 @@
 import { useCartActions } from "@/composable/useCartActions";
 import { useOrder } from "@/composable/useOrder";
 import { useCartStore } from "@/store/cart";
+import { ref } from "vue";
 
 const cartStore = useCartStore();
 const { removeFromCartWithNotify } = useCartActions();
@@ -21,6 +22,7 @@ const decrement = (product) => {
   }
 };
 const { placeOrder } = useOrder();
+const address = ref("");
 </script>
 
 <template>
@@ -99,25 +101,38 @@ const { placeOrder } = useOrder();
       v-if="cartStore.items.length > 0"
       class="mt-8 py-6 px-6 bg-slate-50 flex border-t border-gray-300 justify-center items-center gap-20"
     >
-    <div class="flex flex-col">
-      <span class="text-xl font-bold"
-        >Total Items: {{ cartStore.totalItems }}</span
-      >
-      
-      <span class="text-xl font-semibold text-blue-600"
-        >GrandTotal: ৳ {{ cartStore.cartTotalPrice.toLocaleString() }}</span
-      >
-      <span class="text-xl font-semibold bg-orange-100 text-orange-600 p-1 rounded-lg text-xs font-bold mt-1 w-fit"
-        >Saved: ৳ {{ cartStore.cartTotalDiscountedPrice.toLocaleString() }}</span
-      >
-      <button class="px-6 py-2 font-semibold bg-blue-600 text-white rounded-lg hover:bg-blue-700 shadow-sm mt-6"
-      @click="placeOrder"
-      >
-      Checkout
-    </button>
-    </div>
-    
-      
+      <div class="flex flex-col">
+        <span class="text-xl font-bold"
+          >Total Items: {{ cartStore.totalItems }}</span
+        >
+
+        <span class="text-xl font-semibold text-blue-600"
+          >GrandTotal: ৳ {{ cartStore.cartTotalPrice.toLocaleString() }}</span
+        >
+        <span
+          class="text-xl font-semibold bg-orange-100 text-orange-600 p-1 rounded-lg text-xs font-bold mt-1 w-fit"
+          >Saved: ৳
+          {{ cartStore.cartTotalDiscountedPrice.toLocaleString() }}</span
+        >
+      </div>
+      <div class="mt-4 w-full max-w-md">
+        <label class="block text-sm font-medium text-gray-700"
+          >Shipping Address</label
+        >
+        <textarea
+          v-model="address"
+          placeholder="Enter your full address..."
+          class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+          rows="2"
+        ></textarea>
+        <button
+          class="px-6 py-2 font-semibold bg-blue-600 text-white rounded-lg hover:bg-blue-700 shadow-sm mt-6 disabled:bg-gray-400"
+          :disabled="!address"
+          @click="placeOrder(address)"
+        >
+          {{ loading ? "Processing..." : "Checkout" }}
+        </button>
+      </div>
     </div>
   </div>
 </template>

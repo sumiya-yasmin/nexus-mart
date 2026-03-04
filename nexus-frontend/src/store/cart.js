@@ -15,7 +15,13 @@ export const useCartStore = defineStore('cart', () => {
     })
 
     const cartTotalDiscountedPrice = computed(() => {
-        return items.value.reduce((total, item) => total + (item.quantity * (item.oldPrice-item.price)), 0);
+        return items.value.reduce((total, item) => {
+            const savingsPerUnit = item.old_price > item.price 
+            ? (item.old_price - item.price) 
+            : 0;
+            
+        return total + (item.quantity * savingsPerUnit);
+        }, 0);
     })
 
     //actions
@@ -30,9 +36,12 @@ export const useCartStore = defineStore('cart', () => {
     const removeFromCart = (product) => {
         items.value = items.value.filter((item) => item.id != product.id);
     }
+    const clearCart = () => {
+    items.value = []; 
+    }
     watch(items, (newVal) => {
         localStorage.setItem('nexus-cart', JSON.stringify(newVal));
     }, { deep: true });
 
-    return { items, totalItems, cartTotalPrice, cartTotalDiscountedPrice , addToCart, removeFromCart };
+    return { items, totalItems, cartTotalPrice, cartTotalDiscountedPrice , addToCart, removeFromCart, clearCart };
 })
