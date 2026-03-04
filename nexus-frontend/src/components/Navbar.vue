@@ -1,8 +1,24 @@
 <script setup>
+import { useAuthStore } from "@/store/auth";
 import { useCartStore } from "@/store/cart";
 import { useProductStore } from "@/store/product";
+import { storeToRefs } from "pinia";
+import { useRouter } from "vue-router";
+import { useToast } from "vue-toastification";
 const productStore = useProductStore();
 const cartStore = useCartStore();
+const authStore = useAuthStore();
+const { isLoggedIn } = storeToRefs(authStore);
+const router = useRouter();
+const toast = useToast();
+const handleLogout = async () => {
+  await authStore.logout();
+   toast.success('Logout Successful', {
+      timeout: 2000,
+      position: "top-right",
+    });
+  router.push("/");
+};
 </script>
 <template>
   <div
@@ -22,16 +38,16 @@ const cartStore = useCartStore();
         </span>
         <input
           v-model="productStore.searchQuery"
-          class="border bg-gray-100 border-gray-200 w-full py-2 pl-10 pr-3 leading-5 rounded-md focus:outline-none focus:bg-white focus:ring-2"
+          class="border bg-gray-100 border-gray-200 w-full py-2 pl-10 pr-3 leading-5 rounded-md focus:outline-none focus:bg-white focus:ring-2 transition-all active:scale-95 text-sm"
           placeholder="Search your Gadgets...."
         />
-        <button 
-    v-if="productStore.searchQuery"
-    @click="productStore.searchQuery = ''"
-    class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600"
-  >
-    ✕
-  </button>
+        <button
+          v-if="productStore.searchQuery"
+          @click="productStore.searchQuery = ''"
+          class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600"
+        >
+          ✕
+        </button>
       </div>
     </div>
     <div class="flex justify-between items-center gap-6">
@@ -52,13 +68,32 @@ const cartStore = useCartStore();
           >
         </button>
       </router-link>
-      <router-link to="/login">
-      <button
-        class="border rounded-md hover:bg-blue-600 hover:text-white py-2 px-4"
-      >
-        Login
-      </button>
+      <router-link v-if="!isLoggedIn" to="/login">
+        <button
+          class="border font-bold rounded-lg bg-blue-600 hover:bg-blue-700 shadow-md shadow-blue-100 text-white py-2 px-6"
+        >
+          Login
+        </button>
       </router-link>
+      <div
+        v-else
+        class="flex items-center gap-3 bg-gray-50 p-1.5 pr-4 rounded-full border border-gray-100"
+      >
+        <div
+          class="h-8 w-8 bg-blue-600 text-white flex items-center justify-center rounded-full text-xs font-bold shadow-sm"
+        >
+          {{ authStore.user?.name?.charAt(0).toUpperCase() }}
+        </div>
+
+        <div class="h-4 w-px bg-gray-300 mx-1"></div>
+
+        <button
+          @click="handleLogout"
+          class="text-xs font-black text-gray-500 hover:text-red-600 uppercase tracking-wider transition-colors"
+        >
+          Logout
+        </button>
+      </div>
     </div>
   </div>
 </template>
