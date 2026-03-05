@@ -1,4 +1,4 @@
-import { createOrder } from "@/api/orderService";
+import { createOrder, getOrders } from "@/api/orderService";
 import { useCartStore } from "@/store/cart";
 import { ref } from "vue";
 import { useToast } from "vue-toastification";
@@ -8,6 +8,7 @@ export function useOrder() {
   const loading = ref(false);
   const error = ref(null);
   const toast = useToast();
+  const orders = ref([]);
 
   const placeOrder = async (address) => {
     loading.value = true;
@@ -32,5 +33,19 @@ export function useOrder() {
       loading.value = false;
     }
   };
-  return { loading, error, placeOrder };
+  const fetchOrders = async () => {
+    loading.value = true;
+    error.value = null;
+    try {
+      const response = await getOrders();
+      orders.value = response.data;
+      return response.data;
+    } catch (err) {
+      error.value = err.response?.data?.message || "Something went wrong";
+      throw err;
+    } finally {
+      loading.value = false;
+    }
+  }
+  return { loading, error, placeOrder, fetchOrders, orders };
 }
