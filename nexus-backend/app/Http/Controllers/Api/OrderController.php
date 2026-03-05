@@ -40,4 +40,9 @@ class OrderController extends Controller
             ], 201);
         });
     }
+
+    public function index(Request $request){
+          $orders = Order::where('user_id', $request->user()->id)->with(['items.product'])->latest()->get();
+          return response()->json($orders);
+    }
 }
