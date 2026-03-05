@@ -26,9 +26,9 @@ const address = ref("");
 </script>
 
 <template>
-  <div class="max-w-7xl mx-auto px-4 pt-4">
-    <h2 class="text-3xl font-bold mb-2 border-b border-gray-300 py-4">
-      Your Shopping Cart
+  <div class="max-w-7xl mx-auto px-4 pt-4 bg-gray-100">
+    <h2 class="text-2xl text-center font-bold mb-2 py-4 border-b border-gray-300">
+      Shopping Cart
     </h2>
     <div
       v-if="cartStore.items.length === 0"
@@ -39,34 +39,37 @@ const address = ref("");
         Go Shopping
       </router-link>
     </div>
-    <div v-for="product in cartStore.items" :key="product.id" class="py-8 px-4">
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-        <div class="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm">
-          <img :src="product.image" class="w-full h-auto max-h-[500px]" />
+    <div v-else class="grid grid-cols-1 lg:grid-cols-3 gap-10 items-start p-8">
+      <div class="lg:col-span-2 space-y-8">
+    <div v-for="product in cartStore.items" :key="product.id" class="p-10 bg-white rounded-xl max-w-2xl ">
+      <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+        <div class="bg-white w-full md:w-32 h-32 p-6 rounded-2xl border border-slate-100 shadow-sm">
+          <img :src="product.image" class="w-full h-full object-contain" />
         </div>
         <div class="md:col-span-2 flex flex-col gap-2 justify-center">
-          <h2 class="text-2xl text-black-400 font-semibold">
+          <h2 class="text-lg text-black-400 font-semibold">
             {{ product.name }}
           </h2>
-          <p class="text-bold text-xl">{{ product.description }}</p>
+          <p class="text-bold text-sm">{{ product.description }}</p>
           <div
             class="flex items-center justify-start gap-4 border-t border-b py-4 border-gray-100"
           >
-            <span class="font-bold text-black-500 text-xl"
+            <span class="font-bold text-black-500 text-lg"
               >৳ {{ product.price?.toLocaleString() }}</span
-            ><span v-if="product.old_price" class="text-xl line-through"
+            ><span v-if="product.old_price" class="text-sm line-through"
               >৳ {{ product.old_price?.toLocaleString() }}</span
             ><span
               v-if="getDiscount(product) > 0"
-              class="bg-orange-100 text-orange-600 px-3 py-1 rounded-lg text-sm font-bold"
+              class="bg-orange-100 text-orange-600 px-3 py-1 rounded-lg text-xs font-bold"
             >
               {{ getDiscount(product) }}% OFF
             </span>
           </div>
-          <div class="flex flex-col md:flex-row items-center gap-8">
+        </div>
+         <div class="flex flex-col items-center gap-8">
             <div>
               <button
-                class="py-4 px-4 border border-slate-200 hover:bg-gray-100"
+                class="py-2 px-2 rounded-l-xl border border-slate-200 hover:bg-gray-100"
                 @click="decrement(product)"
               >
                 -
@@ -74,10 +77,10 @@ const address = ref("");
               <input
                 v-model.number="product.quantity"
                 type="number"
-                class="w-12 text-center border border-slate-200 py-4 focus:outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                class="w-8 text-center border border-slate-200 py-2 focus:outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
               />
               <button
-                class="py-4 px-4 border border-slate-200 hover:bg-gray-100"
+                class="py-2 px-2 rounded-r-xl border border-slate-200 hover:bg-gray-100"
                 @click="increment(product)"
               >
                 +
@@ -89,28 +92,30 @@ const address = ref("");
                   removeFromCartWithNotify(product);
                 }
               "
-              class="px-4 py-4 bg-red-700 text-white font-semibold rounded-xl text-xl shadow-lg hover:bg-red-600"
+              class="px-3 py-2 bg-red-600 text-white rounded-xl text-lg shadow-lg hover:bg-red-500"
             >
               Remove
             </button>
           </div>
-        </div>
       </div>
     </div>
+    </div>
+    <div class="bg-white p-6 rounded-2xl border border-gray-100 shadow-lg sticky top-6">
+        <h3 class="text-xl font-bold mb-6">Order Summary</h3>
     <div
       v-if="cartStore.items.length > 0"
-      class="mt-8 py-6 px-6 bg-slate-50 flex border-t border-gray-300 justify-center items-center gap-20"
+      class="p-6 bg-slate-50 flex flex-col border-t border-gray-300 justify-center items-start"
     >
       <div class="flex flex-col">
-        <span class="text-xl font-bold"
+        <span class="text-sm font-semibold text-gray-400"
           >Total Items: {{ cartStore.totalItems }}</span
         >
 
-        <span class="text-xl font-semibold text-blue-600"
+        <span class="text-sm font-semibold"
           >GrandTotal: ৳ {{ cartStore.cartTotalPrice.toLocaleString() }}</span
         >
         <span
-          class="text-xl font-semibold bg-orange-100 text-orange-600 p-1 rounded-lg text-xs font-bold mt-1 w-fit"
+          class="text-sm font-semibold bg-orange-100 text-orange-600 p-1 rounded-lg text-xs font-bold mt-1 w-fit"
           >Saved: ৳
           {{ cartStore.cartTotalDiscountedPrice.toLocaleString() }}</span
         >
@@ -133,6 +138,8 @@ const address = ref("");
           {{ loading ? "Processing..." : "Checkout" }}
         </button>
       </div>
+      </div>
+    </div>
     </div>
   </div>
 </template>
