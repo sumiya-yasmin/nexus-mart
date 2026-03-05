@@ -51,7 +51,9 @@ const handleLogout = async () => {
       </div>
     </div>
     <div class="flex justify-between items-center gap-6">
-      <a href="#" class="hover:text-blue-600">Blog</a>
+      <router-link v-if="isLoggedIn" to="/profile/orders" class="hover:text-blue-600">
+      My Orders
+      </router-link>
       <router-link to="/cart">
         <button
           class="relative py-2 px-4 text-gray-600 hover:bg-gray-100 rounded-full transition"
