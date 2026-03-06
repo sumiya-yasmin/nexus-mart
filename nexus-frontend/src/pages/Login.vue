@@ -15,11 +15,16 @@ const handleLogin = async (data) => {
       timeout: 2000,
       position: "top-right",
     });
-    const redirectPath = route.query.redirect || "/";
-    router.push(redirectPath);
+    if (route.query.redirect) {
+      router.push(route.query.redirect);
+    }
+    if (authStore.isAdmin) {
+      router.push("/admin/dashboard");
+    } else {
+      router.push("/");
+    }
   } catch (error) {
-    alert("Login failed", error);
-  }
+toast.error("Login failed. Please check your credentials.");  }
 };
 </script>
 <template>
