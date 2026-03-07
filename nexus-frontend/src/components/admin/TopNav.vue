@@ -1,34 +1,31 @@
 <script setup>
 import { useAuthStore } from "@/store/auth";
-import { storeToRefs } from "pinia";
-import { useRouter } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import { useToast } from "vue-toastification";
 
 const authStore = useAuthStore();
-const { isLoggedIn } = storeToRefs(authStore);
 const router = useRouter();
+const route = useRoute();
 const toast = useToast();
 const handleLogout = async () => {
   await authStore.logout();
   toast.success("Logout Successful", {
-    timeout: 2000,
+    timeout: 1000,
     position: "top-right",
   });
-  router.push("/");
+  router.push("/login");
 };
 </script>
 <template>
   <div
-    class="flex justify-end items-center py-4 px-16 bg-white shadow-sm sticky top-0 z-50"
+    class="flex justify-between items-center py-4 px-16 bg-white shadow-sm sticky top-0 z-50"
   >
-    <router-link v-if="!isLoggedIn" to="/login">
-      <button
-        class="border font-bold rounded-lg bg-blue-600 hover:bg-blue-700 shadow-md shadow-blue-100 text-white py-2 px-6"
-      >
-        Login
-      </button>
-    </router-link>
-    <div v-else class="flex">
+  <div class="flex items-center">
+      <h1 class="text-lg font-semibold text-gray-800 capitalize">
+{{ route.name?.replace('admin-', '') || 'Overview' }}      </h1>
+    </div>
+   
+    <div class="flex">
       <div class="text-right flex flex-col justify-center">
         <p class="text-xs font-bold text-gray-900">
           {{ authStore.user?.name }}
