@@ -10,7 +10,7 @@ onMounted(() => {
 
 <template>
   <div class="max-w-7xl mx-auto p-6 bg-gray-100">
-    <div class="flex items-center justify-between mb-8">
+    <div class="flex items-center justify-between mb-8 max-w-2xl mx-auto">
       <h1 class="text-3xl font-black text-gray-900 tracking-tight">
         My Orders
       </h1>
@@ -86,12 +86,11 @@ onMounted(() => {
                   {{ item.product?.name }}
                 </h4>
                 <p class="text-sm text-gray-500">
-                  {{ item.product?.description}}
+                  {{ item.product?.description }}
                 </p>
-               
               </div>
               <div class="flex-1">
-                 <p class="text-sm text-gray-500">
+                <p class="text-sm text-gray-500">
                   Quantity: {{ item.quantity }} × ৳{{ item.price }}
                 </p>
                 <p class="font-bold text-gray-700">
@@ -100,24 +99,29 @@ onMounted(() => {
               </div>
             </div>
             <div class="flex justify-between items-center py-2 px-6">
-            <div class="flex items-center justify-center gap-2">
-              <p
-                class="text-[10px] uppercase tracking-widest text-gray-400 font-bold"
-              >
-                Total Amount:
-              </p>
-              <p class="text-lg font-black">
-                ৳{{ order.total_price }}
-              </p>
-            </div>
-            <div class="flex items-center gap-2 max-w-[50%]"> <p class="text-[10px] uppercase tracking-widest text-gray-400 font-bold shrink-0">
-    Shipping To:
-  </p>
-  <div class="flex-1 min-w-0"> <p class="text-sm text-gray-600 line-clamp-2 hover:line-clamp-none transition-all cursor-help" title="Click to expand">
-      {{ order.address }}
-    </p>
-  </div>
-</div>
+              <div class="flex items-center justify-center gap-2">
+                <p
+                  class="text-[10px] uppercase tracking-widest text-gray-400 font-bold"
+                >
+                  Total Amount:
+                </p>
+                <p class="text-lg font-black">৳{{ order.total_price }}</p>
+              </div>
+              <div class="flex items-center gap-2 max-w-[50%]">
+                <p
+                  class="text-[10px] uppercase tracking-widest text-gray-400 font-bold shrink-0"
+                >
+                  Shipping To:
+                </p>
+                <div class="flex-1 min-w-0">
+                  <p
+                    class="text-sm text-gray-600 line-clamp-2 hover:line-clamp-none transition-all cursor-help"
+                    title="Click to expand"
+                  >
+                    {{ order.address }}
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
