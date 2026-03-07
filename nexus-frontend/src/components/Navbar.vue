@@ -8,15 +8,15 @@ import { useToast } from "vue-toastification";
 const productStore = useProductStore();
 const cartStore = useCartStore();
 const authStore = useAuthStore();
-const { isLoggedIn } = storeToRefs(authStore);
+const { isLoggedIn, isAdmin } = storeToRefs(authStore);
 const router = useRouter();
 const toast = useToast();
 const handleLogout = async () => {
   await authStore.logout();
-   toast.success('Logout Successful', {
-      timeout: 2000,
-      position: "top-right",
-    });
+  toast.success("Logout Successful", {
+    timeout: 2000,
+    position: "top-right",
+  });
   router.push("/");
 };
 </script>
@@ -51,8 +51,18 @@ const handleLogout = async () => {
       </div>
     </div>
     <div class="flex justify-between items-center gap-6">
-      <router-link v-if="isLoggedIn" to="/profile/orders" class="hover:text-blue-600">
-      My Orders
+      <router-link v-if="isAdmin"
+       to="/admin/dashboard"
+        class="hover:text-blue-600"
+      >
+         Dashboard
+      </router-link>
+      <router-link
+        v-else="isLoggedIn"
+        to="/profile/orders"
+        class="hover:text-blue-600"
+      >
+        My Orders
       </router-link>
       <router-link to="/cart">
         <button
