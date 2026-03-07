@@ -1,4 +1,5 @@
 <script setup>
+import { Eye, EyeOff } from 'lucide-vue-next';
 import { ref } from 'vue';
 
 const props = defineProps(['mode']);
@@ -9,6 +10,9 @@ const form = ref({
     'password': '',
     'password_confirmation': '',
 })
+
+const showPassword = ref(false);
+const showConfirmPassword = ref(false);
 </script>
 <template>
   <div class="flex flex-col items-center justify-center min-h-[50vh]">
@@ -30,12 +34,24 @@ const form = ref({
 
         <div>
           <label class="block text-sm font-semibold text-gray-600 mb-1">Password</label>
-          <input v-model="form.password" type="password" class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none transition-all" placeholder="••••••••" />
+          <div class="relative">
+          <input v-model="form.password" :type="showPassword? 'text' : 'password'" class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none transition-all" placeholder="••••••••" />
+          <button @click="showPassword = !showPassword" type="button" class="absolute cursor-pointer right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-blue-600 transition-colors">
+              <Eye v-if="showPassword" :size="20" />
+              <eye-off v-else :size="20"/>
+          </button>
+          </div>
         </div>
 
         <div v-if="mode === 'register'">
           <label class="block text-sm font-semibold text-gray-600 mb-1">Confirm Password</label>
-          <input v-model="form.password_confirmation" type="password" class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none transition-all" placeholder="••••••••" />
+           <div class="relative">
+          <input v-model="form.password_confirmation" :type="showConfirmPassword? 'text' : 'password'"  class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none transition-all" placeholder="••••••••" />
+          <button @click="showConfirmPassword = !showConfirmPassword" type="button" class="absolute cursor-pointer right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-blue-600 transition-colors">
+              <Eye v-if="showConfirmPassword" :size="20" />
+              <eye-off v-else :size="20"/>
+          </button>
+          </div>
         </div>
 
         <button type="submit" class="w-full py-3 px-4 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl shadow-lg shadow-blue-200 transition-all active:scale-95">

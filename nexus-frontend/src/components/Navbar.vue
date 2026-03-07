@@ -66,6 +66,7 @@ const handleLogout = async () => {
       </router-link>
       <router-link to="/cart">
         <button
+        v-if="!isAdmin"
           class="relative py-2 px-4 text-gray-600 hover:bg-gray-100 rounded-full transition"
         >
           <span class="text-lg">🛒</span>
