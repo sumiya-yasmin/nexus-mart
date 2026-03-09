@@ -12,7 +12,7 @@ export function useProducts() {
     try {
       const response = await fetchProducts();
       console.log("Laravel responded with:", response.data);
-      products.value = response.data.data;
+      products.value = response.data.data.data;
     } catch (error) {
       error.value = error.message || "Failed to load products";
       console.error("API Error detected:", error);
