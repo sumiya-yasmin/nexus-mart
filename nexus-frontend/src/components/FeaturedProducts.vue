@@ -11,6 +11,7 @@ const productStore = useProductStore();
 const props = defineProps(['activeFilter']);
 const emit = defineEmits(['clear-filter'])
 const filteredProducts = computed(() => {
+  if (!products.value) return [];
   let list = products.value;
   if (!props.activeFilter && !productStore.searchQuery) {
     return products.value;
@@ -20,7 +21,7 @@ const filteredProducts = computed(() => {
   }
   if (productStore.searchQuery) {
     const query = productStore.searchQuery.toLowerCase();
-    list = list.filter((p)=> p.name.toLowerCase().includes(query) || p.category.name.toLowerCase().includes(query))
+    list = list.filter((p)=> p?.name?.toLowerCase().includes(query) || p?.category?.name?.toLowerCase().includes(query))
   }
   return list;
 })
@@ -43,11 +44,12 @@ const filteredProducts = computed(() => {
         <div v-if="loading" class="text-center py-10">Loading...</div>
     <div v-else-if="error" class="text-red-500">{{ error }}</div>
     <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-      <ProductCard
-        v-for="product in filteredProducts"
-        :key="product.id"
-        :product="product"
-      />
-    </div>
+  <template v-for="product in filteredProducts" :key="product?.id">
+    <ProductCard
+      v-if="product && typeof product === 'object' && product.id"
+      :product="product"
+    />
+  </template>
+</div>
   </div>
 </template>

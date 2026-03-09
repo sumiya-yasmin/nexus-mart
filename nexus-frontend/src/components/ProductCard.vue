@@ -1,5 +1,6 @@
 <script setup>
 import { useCartActions } from '@/composable/useCartActions';
+import { computed } from 'vue';
 
 const props = defineProps({
   product: {
@@ -7,27 +8,28 @@ const props = defineProps({
     required: true,
   },
 });
-props.product.oldPrice= props.product.old_price;
-const discount = props.product.oldPrice
-  ? Math.round(
-      ((props.product.oldPrice - props.product.price) /
-        props.product.oldPrice) *
-        100,
+const discount = computed(() => {
+  return props.product.old_price
+    ? Math.round(
+      ((props.product.old_price - props.product.price) /
+        props.product.old_price) *
+      100,
     )
-  : 0;
+    : 0;
+});
 const { addToCartWithNotify } = useCartActions();
 </script>
 <template>
-  <router-link :to="`/product/${product.slug}`" class="group">
+  <router-link v-if="product && product.slug" :to="`/product/${product.slug}`" class="group">
   <div
     class="bg-white flex flex-col h-full border border-slate-100 rounded-2xl overflow-hidden hover:shadow-xl transition-shadow"
   >
     <div class="relative">
       <div
-        v-if="product.oldPrice && product.oldPrice > product.price"
+        v-if="product.old_price && product.old_price > product.price"
         class="absolute top-0 left-0 z-10 bg-orange-400 px-3 py-1 rounded-br-xl font-bold uppercase text-[10px] text-white"
       >
-        Save {{ product.oldPrice - product.price }}৳ (-{{ discount }}%)
+        Save {{ product.old_price - product.price }}৳ (-{{ discount }}%)
       </div>
 
       <div class="w-full h-48 flex items-center justify-center overflow-hidden">
@@ -53,12 +55,12 @@ const { addToCartWithNotify } = useCartActions();
       </h2>
       <div class="flex items-center">
         <span class="text-red-700 font-bold"
-          >{{ product.price.toLocaleString() }}৳</span
+          >{{ Number(product?.price || 0).toLocaleString() }}৳</span
         >
         <span
-          v-if="product.oldPrice && product.oldPrice > product.price"
+          v-if="product.old_price && product.old_price > product.price"
           class="text-xs ml-2 line-through"
-          >{{ product.oldPrice.toLocaleString() }}৳</span
+          >{{ Number(product.old_price).toLocaleString() }}৳</span
         >
       </div>
      <button 
