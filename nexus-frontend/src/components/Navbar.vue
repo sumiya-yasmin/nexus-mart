@@ -14,7 +14,7 @@ const toast = useToast();
 const handleLogout = async () => {
   await authStore.logout();
   toast.success("Logout Successful", {
-    timeout: 2000,
+    timeout: 1000,
     position: "top-right",
   });
   router.push("/");
