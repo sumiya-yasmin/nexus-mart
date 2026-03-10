@@ -15,13 +15,14 @@ return new class extends Migration
             $table->id();
             $table->foreignId('category_id')->constrained()->onDelete('cascade');
             $table->string('name');
+            $table->integer('quantity')->default(10);
             $table->string('slug')->unique();
             $table->text('description')->nullable();
-            $table->decimal('price',12,2);
-            $table->decimal('old_price',12,2)->nullable();
+            $table->decimal('price', 12, 2);
+            $table->decimal('old_price', 12, 2)->nullable();
             $table->boolean('is_flash_sale')->default(false);
             $table->string('image')->nullable();
-            $table->float('rating',2,1)->default(0.0);
+            $table->float('rating', 2, 1)->default(0.0);
             $table->timestamps();
         });
     }

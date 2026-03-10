@@ -17,6 +17,8 @@ return new class extends Migration
             $table->decimal('total_price',10,2);
             $table->string('status')->default('pending');
             $table->text('address')->nullable();
+            $table->string('payment_status')->default('unpaid');
+            $table->string('payment_method')->default('cash');
             $table->timestamps();
 
         });
