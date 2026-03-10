@@ -1,4 +1,5 @@
 import { fetchProductBySlug, fetchProducts } from "@/api/productService";
+import { useProductStore } from "@/store/product";
 import { ref } from "vue";
 import { useRoute } from "vue-router";
 
@@ -6,11 +7,18 @@ export function useProducts() {
   const products = ref([]);
   const loading = ref(false);
   const error = ref(null);
-  const loadProducts = async () => {
+  const productStore = useProductStore();
+  const loadProducts = async (categorySlug) => {
     console.log("Axios is about to call Laravel...");
     loading.value = true;
     try {
-      const response = await fetchProducts();
+      const params = {
+        min_price : productStore.min_price,
+        max_price: productStore.max_price,
+        category_slug: categorySlug,
+        search: productStore.searchQuery,
+      }
+      const response = await fetchProducts(params);
       console.log("Laravel responded with:", response.data);
       products.value = response.data.data.data;
     } catch (error) {
