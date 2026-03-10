@@ -10,7 +10,7 @@ export function useOrder() {
   const toast = useToast();
   const orders = ref([]);
 
-  const placeOrder = async (address) => {
+  const placeOrder = async (address, paymentMethod) => {
     loading.value = true;
     error.value = null;
     try {
@@ -18,6 +18,7 @@ export function useOrder() {
         items: cartStore.items,
         total_price: cartStore.cartTotalPrice,
         address: address,
+        payment_method: paymentMethod,
       };
       const response = await createOrder(orderData);
       toast.success("Your order is placed successfully", {

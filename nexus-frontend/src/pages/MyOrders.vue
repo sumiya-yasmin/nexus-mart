@@ -60,6 +60,15 @@ onMounted(() => {
               </div>
               <span
                 :class="{
+                  'bg-amber-100 text-amber-700': order.payment_status === 'unpaid',
+                  'bg-green-100 text-green-700': order.payment_status === 'paid',
+                }"
+                class="px-3 py-1 rounded-lg text-xs text-center font-black uppercase tracking-tighter"
+              >
+                {{ order.payment_status }}
+              </span>
+              <span
+                :class="{
                   'bg-amber-100 text-amber-700': order.status === 'pending',
                   'bg-green-100 text-green-700': order.status === 'completed',
                   'bg-blue-100 text-blue-700': order.status === 'shipped',
