@@ -1,10 +1,10 @@
 import { defineStore } from "pinia";
 import { computed, ref } from "vue";
 import * as authApi from "@/api/authService";
-import { useRouter } from "vue-router";
 export const useAuthStore = defineStore("auth", () => {
   const user = ref(JSON.parse(localStorage.getItem("user")) || null);
   const token = ref(localStorage.getItem("token") || null);
+    const errors = ref({});
 
   const isLoggedIn = computed(() => !!token.value);
   const isAdmin = computed(() => {
@@ -13,7 +13,7 @@ export const useAuthStore = defineStore("auth", () => {
 
   const login = async (credentials) => {
     try {
-        const response = await authApi.login(credentials);
+      const response = await authApi.login(credentials);
       user.value = response.data.user;
       token.value = response.data.token;
       localStorage.setItem("user", JSON.stringify(user.value));
@@ -26,12 +26,16 @@ export const useAuthStore = defineStore("auth", () => {
 
   const register = async (userData) => {
     try {
+      errors.value={};
       const response = await authApi.register(userData);
       user.value = response.data.user;
       token.value = response.data.token;
       localStorage.setItem("user", JSON.stringify(user.value));
       localStorage.setItem("token", token.value);
     } catch (error) {
+      if (error.response?.status === 422) {
+            errors.value = error.response.data.errors;
+        }
       throw error;
     }
   };
@@ -49,6 +53,6 @@ export const useAuthStore = defineStore("auth", () => {
     }
   }
     return {
-        user, token, isLoggedIn, isAdmin, login,register, logout
+        user, token, isLoggedIn, isAdmin, login,register, logout, errors
     }
 });

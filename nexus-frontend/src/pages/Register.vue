@@ -22,6 +22,6 @@ const handleRegister = async (data) => {
 
 <template>
   <div class="mt-8">
-    <AuthForm mode="register" @submit="handleRegister" />
+    <AuthForm mode="register" @submit="handleRegister" :errors="authStore.errors" />
   </div>
 </template>

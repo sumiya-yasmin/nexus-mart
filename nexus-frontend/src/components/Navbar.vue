@@ -58,7 +58,7 @@ const handleLogout = async () => {
          Dashboard
       </router-link>
       <router-link
-        v-else="isLoggedIn"
+        v-else-if="isLoggedIn"
         to="/profile/orders"
         class="hover:text-blue-600"
       >
