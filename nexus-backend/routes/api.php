@@ -31,6 +31,7 @@ Route::middleware(['auth:sanctum', 'admin'])->prefix('admin')->group(function ()
         return response()->json(['message' => 'Welcome, Admin!']);
     });
     Route::get('/orders', [AdminOrderController::class, 'index']);
+    Route::get('/orders/{order}', [AdminOrderController::class, 'show']);
     Route::patch('/orders/{order}/status', [AdminOrderController::class, 'updateStatus']);
     Route::patch('/orders/{order}/payment_status', [AdminOrderController::class, 'updatePaymentStatus']);
 
