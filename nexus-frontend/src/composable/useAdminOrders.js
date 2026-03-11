@@ -1,5 +1,6 @@
 import {
   getAllOrders,
+  getOrderById,
   updateOrderPaymentStatus,
   updateOrderStatus,
 } from "@/api/admin/adminOrderService";
@@ -8,8 +9,11 @@ import { useToast } from "vue-toastification";
 const toast = useToast();
 export function useAdminOrders() {
   const orders = ref([]);
+  const order = ref(null);
   const loading = ref(false);
   const error = ref(null);
+  const detailPageLoading = ref(false);
+  const detailPageError = ref(null);
 
   const fetchOrders = async () => {
     loading.value = true;
@@ -19,6 +23,18 @@ export function useAdminOrders() {
       error.value = "Failed to load orders.";
     } finally {
       loading.value = false;
+    }
+  };
+
+  const fetchOrderDetails = async (id) => {
+    detailPageLoading.value = true;
+    detailPageError.value = null;
+    try {
+      order.value = await getOrderById(id);
+    } catch (err) {
+      detailPageError.value = "Could not load order details.";
+    } finally {
+      detailPageLoading.value = false;
     }
   };
 
@@ -53,12 +69,16 @@ export function useAdminOrders() {
       await fetchOrders();
     }
   };
-  return {
+    return {
+    order,
     loading,
     error,
     orders,
     fetchOrders,
     updateStatus,
     updatePaymentStatus,
+    detailPageLoading,
+    detailPageError,
+    fetchOrderDetails,
   };
 }
