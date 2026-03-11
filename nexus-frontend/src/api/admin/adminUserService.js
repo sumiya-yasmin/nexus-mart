@@ -1,3 +1,5 @@
+import client from "../client";
+
 export const getAllUsers = async () => {
     const response = await client.get('/admin/users');
     return response.data;
