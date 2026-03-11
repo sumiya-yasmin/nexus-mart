@@ -32,7 +32,7 @@ Route::middleware(['auth:sanctum', 'admin'])->prefix('admin')->group(function ()
     });
     Route::get('/orders', [AdminOrderController::class, 'index']);
     Route::patch('/orders/{order}/status', [AdminOrderController::class, 'updateStatus']);
-    Route::patch('/orders/{order}/paymentstatus', [AdminOrderController::class, 'updatePaymentStatus']);
+    Route::patch('/orders/{order}/payment_status', [AdminOrderController::class, 'updatePaymentStatus']);
 
     Route::get('/users', [AdminUserController::class, 'index']);
     Route::patch('/users/{user}', [AdminUserController::class, 'update']);

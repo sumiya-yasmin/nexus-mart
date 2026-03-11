@@ -10,7 +10,7 @@ class AdminOrderController extends Controller
 {
     public function index()
     {
-        $orders = Order::with(['user', 'items.products'])->latest()->get();
+        $orders = Order::with(['user', 'items.product'])->latest()->get();
         return response()->json($orders);
     }
 
