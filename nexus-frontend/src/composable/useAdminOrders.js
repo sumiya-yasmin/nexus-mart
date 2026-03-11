@@ -4,7 +4,8 @@ import {
   updateOrderStatus,
 } from "@/api/admin/adminOrderService";
 import { ref } from "vue";
-
+import { useToast } from "vue-toastification";
+const toast = useToast();
 export function useAdminOrders() {
   const orders = ref([]);
   const loading = ref(false);
@@ -24,7 +25,7 @@ export function useAdminOrders() {
   const updateStatus = async (orderId, status) => {
     try {
       await updateOrderStatus(orderId, status);
-      fetchOrders();
+      await fetchOrders();
     } catch (error) {
       toast.error(`Error updating status: ${error.message}`, {
         timeout: 1000,
@@ -35,7 +36,7 @@ export function useAdminOrders() {
   const updatePaymentStatus = async (orderId, status) => {
     try {
       await updateOrderPaymentStatus(orderId, status);
-      fetchOrders();
+      await fetchOrders();
     } catch (error) {
       toast.error(`Error updating status: ${error.message}`, {
         timeout: 1000,
