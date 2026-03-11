@@ -14,6 +14,12 @@ class AdminOrderController extends Controller
         return response()->json($orders);
     }
 
+    public function show(Order $order)
+    {
+       $order->load(['user', 'items.product', 'items.product.category']); 
+       return response()->json($order);
+   }
+
     public function updateStatus(Request $request, Order $order)
     {
         $request->validate([
