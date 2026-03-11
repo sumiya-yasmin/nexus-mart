@@ -34,5 +34,7 @@ Route::middleware(['auth:sanctum', 'admin'])->prefix('admin')->group(function ()
     Route::patch('/orders/{order}/status', [AdminOrderController::class, 'updateStatus']);
     Route::patch('/orders/{order}/paymentstatus', [AdminOrderController::class, 'updatePaymentStatus']);
 
-    
+    Route::get('/users', [AdminUserController::class, 'index']);
+    Route::patch('/users/{user}', [AdminUserController::class, 'update']);
+    Route::delete('/users/{user}', [AdminUserController::class, 'destroy']);
 });
