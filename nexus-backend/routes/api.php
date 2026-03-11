@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Api\Admin\AdminOrderController;
+use App\Http\Controllers\Api\Admin\AdminUserController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\OrderController;
@@ -21,11 +23,16 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::post('/orders', [OrderController::class, 'store']);
-    Route::get('/orders',[OrderController::class, 'index']);
+    Route::get('/orders', [OrderController::class, 'index']);
 });
 
-Route::middleware(['auth:sanctum', 'admin'])->prefix('admin')->group(function(){
-    Route::get('/stats', function(){
+Route::middleware(['auth:sanctum', 'admin'])->prefix('admin')->group(function () {
+    Route::get('/stats', function () {
         return response()->json(['message' => 'Welcome, Admin!']);
     });
+    Route::get('/orders', [AdminOrderController::class, 'index']);
+    Route::patch('/orders/{order}/status', [AdminOrderController::class, 'updateStatus']);
+    Route::patch('/orders/{order}/paymentstatus', [AdminOrderController::class, 'updatePaymentStatus']);
+
+    
 });
