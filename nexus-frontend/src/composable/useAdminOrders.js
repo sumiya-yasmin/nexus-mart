@@ -23,25 +23,34 @@ export function useAdminOrders() {
   };
 
   const updateStatus = async (orderId, status) => {
+    const orderIndex = orders.value.findIndex((o) => o.id === orderId);
+
+    if (orderIndex !== -1) {
+      orders.value[orderIndex].status = status;
+    }
     try {
       await updateOrderStatus(orderId, status);
-      await fetchOrders();
     } catch (error) {
       toast.error(`Error updating status: ${error.message}`, {
         timeout: 1000,
         position: "bottom-right",
       });
+      await fetchOrders();
     }
   };
   const updatePaymentStatus = async (orderId, status) => {
+    const orderIndex = orders.value.findIndex((o) => o.id === orderId);
+    if (orderIndex !== -1) {
+      orders.value[orderIndex].payment_status = status;
+    }
     try {
       await updateOrderPaymentStatus(orderId, status);
-      await fetchOrders();
     } catch (error) {
       toast.error(`Error updating status: ${error.message}`, {
         timeout: 1000,
         position: "bottom-right",
       });
+      await fetchOrders();
     }
   };
   return {
