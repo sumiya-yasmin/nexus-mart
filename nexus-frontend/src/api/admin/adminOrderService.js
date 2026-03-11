@@ -4,6 +4,11 @@ export const getAllOrders = async () => {
   const response = await client.get("/admin/orders");
   return response.data;
 };
+
+export const getOrderById = async (orderId) => {
+    const response = await client.get(`/admin/orders/${orderId}`)
+    return response.data;
+}
 export const updateOrderStatus = async (orderId, status) => {
   const response = client.patch(`/admin/orders/${orderId}/status`, { status });
   return response.data;
