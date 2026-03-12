@@ -4,11 +4,13 @@ import {
   updateUser,
 } from "@/api/admin/adminUserService";
 import { ref } from "vue";
+import { useToast } from "vue-toastification";
 
 export function useAdminUsers() {
   const users = ref([]);
   const loading = ref(false);
   const error = ref(null);
+  const toast = useToast();
 
   const fetchUsers = async () => {
     loading.value = true;

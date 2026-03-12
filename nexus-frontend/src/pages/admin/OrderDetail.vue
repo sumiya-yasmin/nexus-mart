@@ -27,7 +27,7 @@ onMounted(() => {
         </div>
         <div class="text-right">
           <span class="block text-sm uppercase text-gray-400 font-bold mb-2">Status</span>
-          <span class="px-4 py-2 text-center rounded-full text-sm font-bold bg-violet-100 text-violet-700 uppercase">
+          <span class="px-4 py-2 text-center rounded-full text-sm font-bold bg-blue-100 text-blue-700 uppercase">
             {{ order.status }}
           </span>
         </div>
@@ -68,7 +68,7 @@ onMounted(() => {
                 </td>
                 <td class="py-4 text-center">{{ item.quantity }}</td>
                 <td class="py-4 text-right">${{ item.product?.price }}</td>
-                <td class="py-4 text-right font-bold text-violet-600">
+                <td class="py-4 text-right font-bold text-blue-600">
                   ${{ (item.quantity * item.product?.price).toFixed(2) }}
                 </td>
               </tr>
