@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AdminUserController extends Controller
 {
@@ -29,7 +30,7 @@ class AdminUserController extends Controller
 
     public function destroy(User $user)
     {
-        if (auth()->id === $user->id) {
+        if (Auth::id() === $user->id) {
             return response()->json(['message' => 'You cannot delete your own admin account.'], 403);
         }
         $user->delete();
