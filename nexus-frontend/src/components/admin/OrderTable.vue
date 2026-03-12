@@ -1,5 +1,6 @@
 <script setup>
 import { useAdminOrders } from "@/composable/useAdminOrders";
+import { EyeIcon } from "lucide-vue-next";
 import { onMounted } from "vue";
 const {
   loading,
@@ -18,7 +19,8 @@ onMounted(() => {
     <h2 class="text-2xl font-bold mb-4">NexusMart Orders</h2>
 
     <div v-if="loading" class="text-rose-500">Updating inventory...</div>
-    <table class="w-full text-left border-collapse">
+    <div v-if="orders.length===0">No Orders made Yet</div>
+    <table v-else class="w-full text-left border-collapse">
       <thead>
         <tr class="border-b bg-gray-50">
           <th class="p-3">Order Id</th>
@@ -35,14 +37,22 @@ onMounted(() => {
           :key="order.id"
           class="border-b hover:bg-gray-50"
         >
-          <td class="p-3 font-mono">#NEXUS-{{ order.id }}</td>
+          <td class="p-3 font-mono">
+            <router-link
+              :to="{ name: 'admin-order-detail', params: { id: order.id } }"
+              class="text-blue-600 hover:underline cursor-pointer"
+            >
+              #NEXUS-{{ order.id }}
+            </router-link>
+          </td>
           <td class="p-3">{{ order.user?.name }}</td>
           <td class="p-3">{{ order.total_price }}</td>
           <td class="p-3">
             <span
               :class="{
                 'px-2 py-1 rounded text-xs font-bold uppercase': true,
-                'bg-yellow-100 text-yellow-700': order.payment_status === 'unpaid',
+                'bg-yellow-100 text-yellow-700':
+                  order.payment_status === 'unpaid',
                 'bg-green-100 text-green-700': order.payment_status === 'paid',
               }"
             >
@@ -64,29 +74,36 @@ onMounted(() => {
             </span>
           </td>
           <td class="p-3">
-            <select
-              class="border rounded p-1 text-sm bg-white"
-              @change="updatePaymentStatus(order.id, $event.target.value)"
-              :value="order.payment_status"
-            >
-              <option>Change Payment Status</option>
-              <option value="unpaid">Unpaid</option>
-              <option value="paid">Paid</option>
-            </select>
-          </td>
-          <td class="p-3">
-            <select
-              class="border rounded p-1 text-sm bg-white"
-              @change="updateStatus(order.id, $event.target.value)"
-              :value="order.status"
-            >
-              <option>Change Status</option>
-              <option value="pending">Pending</option>
-              <option value="processing">Processing</option>
-              <option value="shipped">Shipped</option>
-              <option value="delivered">Delivered</option>
-              <option value="cancelled">Cancelled</option>
-            </select>
+            <div class="flex items-center space-x-3">
+              <select
+                class="border rounded p-1 text-xs w-fit bg-white"
+                @change="updatePaymentStatus(order.id, $event.target.value)"
+                :value="order.payment_status"
+              >
+                <option>Change Pay Status</option>
+                <option value="unpaid">Unpaid</option>
+                <option value="paid">Paid</option>
+              </select>
+
+              <select
+                class="border rounded p-1 text-xs w-fit bg-white"
+                @change="updateStatus(order.id, $event.target.value)"
+                :value="order.status"
+              >
+                <option>Change Status</option>
+                <option value="pending">Pending</option>
+                <option value="processing">Processing</option>
+                <option value="shipped">Shipped</option>
+                <option value="delivered">Delivered</option>
+                <option value="cancelled">Cancelled</option>
+              </select>
+              <router-link
+                :to="{ name: 'admin-order-detail', params: { id: order.id } }"
+                class="flex items-center text-blue-600 hover:text-blue-800 font-medium transition-colors"
+              >
+                <EyeIcon />
+              </router-link>
+            </div>
           </td>
         </tr>
       </tbody>
