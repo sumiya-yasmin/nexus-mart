@@ -3,6 +3,7 @@ import MainLayout from "@/Layouts/MainLayout.vue";
 import Dashboard from "@/pages/admin/Dashboard.vue";
 import Order from "@/pages/admin/Order.vue";
 import OrderDetail from "@/pages/admin/OrderDetail.vue";
+import User from "@/pages/admin/User.vue";
 import CartView from "@/pages/CartView.vue";
 import Home from "@/pages/Home.vue";
 import Login from "@/pages/Login.vue";
@@ -42,8 +43,8 @@ const routes = [
     children: [
       { path: "dashboard", name: "admin-dashboard", component: Dashboard },
       { path: "orders", name: "admin-orders", component: Order },
-      {path: "/orders/:id", name:"admin-order-detail", component: OrderDetail}
-      
+      {path: "/orders/:id", name:"admin-order-detail", component: OrderDetail},
+      { path: "users", name: "admin-users", component: User }
     ]
   }
 ];
