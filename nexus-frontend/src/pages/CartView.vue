@@ -24,10 +24,28 @@ const decrement = (product) => {
 const { placeOrder } = useOrder();
 const address = ref("");
 const paymentMethods = [
-  { id: "cash", label: "Pay in Shop" },
-  { id: "cod", label: "Cash on Delivery" },
+  {
+    id: "bkash",
+    label: "bKash",
+    icon: "https://www.logo.wine/a/logo/BKash/BKash-Logo.wine.svg",
+  },
+  { id: "cod", label: "Cash on Delivery", icon: null },
 ];
 const selectedPaymentMethod = ref("cod");
+const loading = ref(false);
+const handleCheckout = async () => {
+  if (!address.value) return;
+  loading.value = true;
+
+  if (selectedPaymentMethod === "bkash") {
+    setTimeout(() => {
+      window.location.href = `/payment/success?method=bkash&amount=${cartStore.cartTotalPrice}`;
+    });
+  } else {
+    await placeOrder(address.value, selectedPaymentMethod.value);
+    loading.value = false;
+  }
+};
 </script>
 
 <template>
@@ -138,70 +156,94 @@ const selectedPaymentMethod = ref("cod");
               {{ cartStore.cartTotalDiscountedPrice.toLocaleString() }}</span
             >
           </div>
-      
-            <div class="mt-4 w-full">
-              <label class="block text-sm font-medium text-gray-700 mb-3"
-                >Payment Method</label
-              >
 
-              <div class="space-y-3">
-                <label
-                  v-for="method in paymentMethods"
-                  :key="method.id"
-                  class="flex items-center p-4 border-2 rounded-2xl cursor-pointer transition-all"
+          <div class="mt-4 w-full">
+            <label class="block text-sm font-medium text-gray-700 mb-3"
+              >Payment Method</label
+            >
+
+            <div class="space-y-3">
+              <label
+                v-for="method in paymentMethods"
+                :key="method.id"
+                class="flex items-center p-4 border-2 rounded-2xl cursor-pointer transition-all"
+                :class="
+                  selectedPaymentMethod === method.id
+                    ? method.id === 'bkash'
+                      ? 'border-pink-500 bg-pink-50'
+                      : 'border-blue-600 bg-blue-50'
+                    : 'border-gray-100'
+                "
+              >
+                <input
+                  type="radio"
+                  :value="method.id"
+                  v-model="selectedPaymentMethod"
+                  class="sr-only"
+                />
+
+                <div
+                  class="w-5 h-5 rounded-full border-2 mr-4 flex items-center justify-center"
                   :class="
                     selectedPaymentMethod === method.id
-                      ? 'border-blue-600 bg-blue-50'
-                      : 'border-gray-100'
+                      ? method.id === 'bkash'
+                        ? 'border-pink-500'
+                        : 'border-blue-600'
+                      : 'border-gray-300'
                   "
                 >
-                  <input
-                    type="radio"
-                    :value="method.id"
-                    v-model="selectedPaymentMethod"
-                    class="sr-only"
-                  />
-
                   <div
-                    class="w-5 h-5 rounded-full border-2 mr-4 flex items-center justify-center"
+                    v-if="selectedPaymentMethod === method.id"
+                    class="w-2.5 h-2.5 bg-blue-600 rounded-full"
                     :class="
-                      selectedPaymentMethod === method.id
-                        ? 'border-blue-600'
-                        : 'border-gray-300'
+                      method.id === 'bkash' ? 'bg-pink-500' : 'bg-blue-600'
                     "
-                  >
-                    <div
-                      v-if="selectedPaymentMethod === method.id"
-                      class="w-2.5 h-2.5 bg-blue-600 rounded-full"
-                    ></div>
-                  </div>
+                  ></div>
+                </div>
 
-                  <span class="font-bold text-gray-700">{{
-                    method.label
-                  }}</span>
-                </label>
-              </div>
+                <span class="font-bold text-gray-700">{{ method.label }}</span>
+                <img
+                  v-if="method.icon"
+                  :src="method.icon"
+                  class="ml-auto h-8 object-contain"
+                />
+              </label>
             </div>
           </div>
-          <div class="mt-4 w-full max-w-md">
-            <label class="block text-sm font-medium text-gray-700"
-              >Shipping Address</label
-            >
-            <textarea
-              v-model="address"
-              placeholder="Enter your full address..."
-              class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
-              rows="2"
-            ></textarea>
-            <button
-              class="px-6 py-2 font-semibold bg-blue-600 text-white rounded-lg hover:bg-blue-700 shadow-sm mt-6 disabled:bg-gray-400"
-              :disabled="!address"
-              @click="placeOrder(address, selectedPaymentMethod)"
-            >
-              {{ loading ? "Processing..." : "Checkout" }}
-            </button>
-          </div>
         </div>
+        <div class="mt-4 w-full max-w-md">
+          <label class="block text-sm font-medium text-gray-700"
+            >Shipping Address</label
+          >
+          <textarea
+            v-model="address"
+            placeholder="Enter your full address..."
+            class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+            rows="2"
+          ></textarea>
+          <button
+            class="w-full px-6 py-4 font-bold text-white rounded-xl shadow-lg mt-6 transition-all duration-300 disabled:bg-gray-400"
+            :class="
+              selectedPaymentMethod === 'bkash'
+                ? 'bg-pink-600 hover:bg-pink-700'
+                : 'bg-blue-600 hover:bg-blue-700'
+            "
+            :disabled="!address || loading"
+            @click="handleCheckout"
+          >
+            <span v-if="loading && selectedPaymentMethod === 'bkash'" class="flex items-center justify-center gap-2">
+              <svg class="animate-spin h-5 w-5 text-white" viewBox="0 0 24 24">
+                ...
+              </svg>
+              Redirecting to bKash...
+            </span>
+            <span v-else
+              >Confirm Order (৳
+              {{ cartStore.cartTotalPrice.toLocaleString() }})</span
+            >
+          </button>
+        </div>
+      </div>
     </div>
   </div>
 </template>
