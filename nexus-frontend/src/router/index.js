@@ -8,6 +8,7 @@ import CartView from "@/pages/CartView.vue";
 import Home from "@/pages/Home.vue";
 import Login from "@/pages/Login.vue";
 import MyOrders from "@/pages/MyOrders.vue";
+import PaymentSuccess from "@/pages/PaymentSuccess.vue";
 import ProductDetail from "@/pages/ProductDetail.vue";
 import Register from "@/pages/Register.vue";
 import { useAuthStore } from "@/store/auth";
@@ -34,6 +35,11 @@ const routes = [
           },
         ],
       },
+      {
+        path: '/payment/success',
+        name: 'payment-success',
+        component: PaymentSuccess,
+      }
     ],
   },
   {

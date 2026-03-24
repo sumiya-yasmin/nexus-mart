@@ -1,4 +1,5 @@
 <script setup>
+import { useBkashPayment } from "@/composable/useBkashPayment";
 import { useCartActions } from "@/composable/useCartActions";
 import { useOrder } from "@/composable/useOrder";
 import { useCartStore } from "@/store/cart";
@@ -6,6 +7,7 @@ import { ref } from "vue";
 
 const cartStore = useCartStore();
 const { removeFromCartWithNotify } = useCartActions();
+const { createBkashPayment } = useBkashPayment();
 
 const getDiscount = (product) => {
   if (!product.old_price) return 0;
@@ -36,15 +38,34 @@ const loading = ref(false);
 const handleCheckout = async () => {
   if (!address.value) return;
   loading.value = true;
-
-  if (selectedPaymentMethod === "bkash") {
-    setTimeout(() => {
-      window.location.href = `/payment/success?method=bkash&amount=${cartStore.cartTotalPrice}`;
-    });
-  } else {
-    await placeOrder(address.value, selectedPaymentMethod.value);
+  try {
+    if (selectedPaymentMethod.value === "bkash") {
+      const response = await createBkashPayment({
+        amount: cartStore.cartTotalPrice,
+        address: address.value,
+      });
+     if (response.bkashURL) {
+        window.location.href = response.bkashURL;
+      } else {
+        alert("Could not generate bKash link. Try again.");
+      }
+    } else {
+      await placeOrder(address.value, selectedPaymentMethod.value);
+    }
+  } catch (error) {
+    alert("Something went error during checkout.");
+  } finally {
     loading.value = false;
   }
+
+  // if (selectedPaymentMethod.value === "bkash") {
+  //   setTimeout(() => {
+  //     window.location.href = `/payment/success?method=bkash&amount=${cartStore.cartTotalPrice}`;
+  //   }, 2000);
+  // } else {
+  //   await placeOrder(address.value, selectedPaymentMethod.value);
+  //   loading.value = false;
+  // }
 };
 </script>
 
@@ -238,7 +259,7 @@ const handleCheckout = async () => {
               Redirecting to bKash...
             </span>
             <span v-else
-              >Confirm Order (৳
+              >{{ selectedPaymentMethod === 'bkash' ? 'Pay with Bkash': 'Place Order'}} (৳
               {{ cartStore.cartTotalPrice.toLocaleString() }})</span
             >
           </button>
