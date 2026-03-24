@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\Admin\AdminOrderController;
 use App\Http\Controllers\Api\Admin\AdminUserController;
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\BkashController;
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\OrderController;
 use App\Http\Controllers\Api\ProductController;
@@ -19,11 +20,14 @@ Route::get('/categories', [CategoryController::class, 'index']);
 
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
+    Route::get('/bkash/callback', [BkashController::class, 'callBack']);
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::post('/orders', [OrderController::class, 'store']);
     Route::get('/orders', [OrderController::class, 'index']);
+    Route::get('/bkash/get-token', [BkashController::class, 'getToken']);
+    Route::post('/bkash/create-payment', [BkashController::class, 'createPayment']);    
 });
 
 Route::middleware(['auth:sanctum', 'admin'])->prefix('admin')->group(function () {
