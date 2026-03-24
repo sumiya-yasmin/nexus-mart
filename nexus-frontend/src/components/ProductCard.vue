@@ -1,5 +1,6 @@
 <script setup>
 import { useCartActions } from '@/composable/useCartActions';
+import { useAuthStore } from '@/store/auth';
 import { computed } from 'vue';
 
 const props = defineProps({
@@ -18,6 +19,7 @@ const discount = computed(() => {
     : 0;
 });
 const { addToCartWithNotify } = useCartActions();
+const { isAdmin } = useAuthStore();
 </script>
 <template>
   <router-link v-if="product && product.slug" :to="`/product/${product.slug}`" class="group">
@@ -64,6 +66,7 @@ const { addToCartWithNotify } = useCartActions();
         >
       </div>
      <button 
+     :disabled="isAdmin"
      @click.prevent="addToCartWithNotify(product,1)"
      class="w-full z-50 mt-3 py-2 bg-slate-900 text-white text-xs font-bold rounded-lg hover:bg-slate-600 transition">
             Add to Cart

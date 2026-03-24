@@ -24,7 +24,7 @@ const selectCategory = (slug) => {
   if (slug === '') {
     productStore.searchQuery = '';
   }
-};
+}; 
 const props = defineProps(['activeFilter']);
 </script>
 <template>
