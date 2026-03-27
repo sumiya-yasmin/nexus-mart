@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Events\OrderPlaced;
 use App\Http\Controllers\Controller;
+use App\Jobs\SendOrderEmail;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Product;
@@ -52,11 +54,13 @@ class OrderController extends Controller
                     ]);
                 };
                 $order->update(['total_price' => $calculatedTotal]);
+                $order->load('user');
                 return response()->json([
                     'message' => 'Order created successfully!',
                     'order_id' => $order->id,
                     'order' => $order,
                 ], 201);
+                OrderPlaced::dispatch($order);
             });
         } catch (\Exception $e) {
             return response()->json([
